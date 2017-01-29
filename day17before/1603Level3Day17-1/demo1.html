@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>拍照</title>
+        <link href="css/mui.min.css" rel="stylesheet"/>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <h1 class="mui-title">camera</h1>
+	</header>
+	<div class="mui-content">
+	 <button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="width: 80%;margin-left: 10%;margin-top: 5%;" onclick="getImage()">拍照</button>
+	 <br />
+	  <button type="button" class="mui-btn mui-btn-yellow mui-btn-block" style="width: 80%;margin-left: 10%;margin-top: 5%;" onclick="getVideo()">录像</button>
+	</div>
+	
+	
+	<script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	//默认监听api引入完毕 （并且 你要有这个调用api权限）--使用plus 硬件调用必备的一个监听
+      	document.addEventListener("plusready",onPlusReady,false);    	
+      	//在你初始化时 需要调用硬件接口时 需要在此方法中执行
+      	function onPlusReady(){
+      		console.log("yes，你调用完毕了 可以进行下一步");
+      	
+      	}
+      	function getImage(){
+      		//获取camera 的对象
+      		var cmr = plus.camera.getCamera();
+      		//拍照的照片分辨率
+      		var res = cmr.supportedImageResolutions[0];
+      		//拍照的照片的格式
+      		var fors = cmr.supportedImageFormats[0];
+      		console.log(res+"，"+fors);
+      		//拍照进行中 设定照片获取的分辨率和格式
+      		cmr.captureImage(function(path){
+      		//将相对路径转换成绝对路径
+      		 var urls =  plus.io.convertLocalFileSystemURL(path);
+      		 alert(urls);
+      		},function(error){
+      			alert(error.message);
+      		},{resolution:res,format:fors})
+      	}
+      	
+      	function getVideo(){
+      		var cmr = plus.camera.getCamera();
+      		//获得video的分辨率
+      		var res = cmr.supportedVideoResolutions[0];
+      		//获得video的格式
+      		var fors = cmr.supportedVideoFormats[0];
+      		//录像开始
+      		cmr.startVideoCapture(function(path){
+      			alert("亲,你传的录像"+path);
+      		},function(error){
+      			alert(error.message);
+      		},{resolution:res,format:fors})
+      		//时间限制 //不支持所有手机 从你触发事件 开始计算时间
+      		setTimeout(function(){
+      			cmr.stopVideoCapture();
+      		},10000)
+      	}
+      	
+    </script>
+</body>
+</html>

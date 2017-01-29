@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>存储机制</title>
+        <link href="css/mui.min.css" rel="stylesheet"/>
+        <style type="text/css">
+        	p{font-size: 25px;color: deeppink;}
+        </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <h1 class="mui-title">通讯录</h1>
+	</header>
+	<div class="mui-content">
+		<p id="acc"></p>
+	</div>
+	
+	
+	<script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	//默认监听api引入完毕 （并且 你要有这个调用api权限）--使用plus 硬件调用必备的一个监听
+      	document.addEventListener("plusready",onPlusReady,false);    	
+      	//在你初始化时 需要调用硬件接口时 需要在此方法中执行
+       function onPlusReady(){
+                plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE,function(addbook){
+                	var contacts = addbook.create();
+                	//通讯录姓名
+                	contacts.name = {givenName:"阿忠(诈骗电话)"};
+                	//通讯录的电话号码
+                	contacts.phoneNumbers = [{type:"phone",value:"15205512604",prefered:true}];
+                	//存入到通讯录里
+                	contacts.save();
+                },function(error){
+                	alert(error.message);
+                })
+       
+       }
+    </script>
+</body>
+</html>

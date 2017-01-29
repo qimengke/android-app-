@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>存储机制</title>
+        <link href="css/mui.min.css" rel="stylesheet"/>
+        <style type="text/css">
+        	p{font-size: 25px;color: deeppink;}
+        </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <h1 class="mui-title">重力感应器</h1>
+	</header>
+	<div class="mui-content">
+		<p id="acc"></p>
+	</div>
+	
+	
+	<script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	//默认监听api引入完毕 （并且 你要有这个调用api权限）--使用plus 硬件调用必备的一个监听
+      	document.addEventListener("plusready",onPlusReady,false);    	
+      	//在你初始化时 需要调用硬件接口时 需要在此方法中执行
+       function onPlusReady(){
+       	var acc = document.getElementById("acc");
+       	//getCurrentAcceleration 获得当前的重力加速度
+       	plus.accelerometer.watchAcceleration(function(a){
+       		var str = "x轴加速度"+a.xAxis+",<br/>y轴加速度"+a.yAxis+",<br/>z轴加速度"+a.zAxis
+       		acc.innerHTML=str;
+       	})
+       }
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>录音</title>
+        <link href="css/mui.min.css" rel="stylesheet"/>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <h1 class="mui-title">监听录音</h1>
+	</header>
+	<div class="mui-content">
+	 <button type="button" class="mui-btn mui-btn-purple mui-btn-block" style="width: 80%;margin-left: 10%;margin-top: 5%;" onclick="startRecord()">开始录音</button>
+	 <br />
+	  <button type="button" class="mui-btn mui-btn-red mui-btn-block" style="width: 80%;margin-left: 10%;margin-top: 5%;" onclick="stopRecord()">停止录音</button>
+	</div>
+	
+	
+	<script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	var records;
+      	//默认监听api引入完毕 （并且 你要有这个调用api权限）--使用plus 硬件调用必备的一个监听
+      	document.addEventListener("plusready",onPlusReady,false);    	
+      	//在你初始化时 需要调用硬件接口时 需要在此方法中执行
+      	function onPlusReady(){
+      		records = plus.audio.getRecorder();
+      	
+      	}
+      	function startRecord(){
+      		if(records==null){
+      			alert("录音设备还没准备好")
+      		    return;
+      		}
+      		records.record({filename:"_doc/audio"},function(){
+      			alert("录音成功")
+      		},function(error){
+      			alert("录音失败")
+      		})
+      		
+      	}
+      	
+      	function stopRecord(){
+      		records.stop();
+      	}
+      	
+    </script>
+</body>
+</html>

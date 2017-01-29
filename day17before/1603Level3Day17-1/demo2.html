@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>拍照</title>
+        <link href="css/mui.min.css" rel="stylesheet"/>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <h1 class="mui-title">二维码</h1>
+	</header>
+	<div class="mui-content">
+		<p>QR(二维码)，EAN13(常见条形码)，EAN8(常见的条形码)</p>
+		<img src="img/barCode.png" id="imgs" width="60%" style="margin-left: 20%;margin-top: 10%;"/>
+	 <button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="width: 80%;margin-left: 10%;margin-top: 5%;" onclick="getCode()">扫一扫</button>
+	</div>
+	
+	
+	
+	<script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	//默认监听api引入完毕 （并且 你要有这个调用api权限）--使用plus 硬件调用必备的一个监听
+      	document.addEventListener("plusready",onPlusReady,false);    	
+      	//在你初始化时 需要调用硬件接口时 需要在此方法中执行
+      	function onPlusReady(){
+      		console.log("yes，你调用完毕了 可以进行下一步");
+      	
+      	} 	
+      	
+      	function getCode(){
+      		//你需要扫描图片的路径 ，成功调用的回调函数，失败时回调的函数
+      		//type:返回的扫描码 类型 result 扫描码的内容
+		plus.barcode.scan(document.getElementById("imgs").src,function(type,result){
+      			console.log(type);
+      			window.location = result;
+      		},function(error){
+      			alert(error.message)
+      		})
+      		
+      	}
+    </script>
+</body>
+</html>
